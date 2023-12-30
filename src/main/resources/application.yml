@@ -1,38 +1,27 @@
 server:
   port: 9092
 
-#spring:
-#  data:
-#    mongodb:
-#      host: ${MONGO_HOST}
-#      port: ${MONGO_PORT}
-#      database: ${MONGO_DATABASE}
-#      username: ${MONGO_USERNAME}
-#      password: ${MONGO_PASWORD}
-
 spring:
   data:
     mongodb:
-      host: localhost
+      host: mongodbreactive
       port: 27017
       database: inventory
-      #      authentication-database: admin
-      username: wualter
-      password: "123456"
-
-#db.createUser({user: "admin",pwd:"123456",roles:["root"]})
+      username: admin
+      password: mongo123
+      authentication-database: inventory
 
 #spring:
 #  data:
 #    mongodb:
-#      uri: mongodb://localhost:27017/inventory
+#      host: ${DB_MONGO_HOST}
+#      port: ${DB_MONGO_PORT}
+#      database: ${DB_MONGO_DATABASE}
+#      username: ${DB_MONGO_USERNAME}
+#      password: ${DB_MONGO_PASWORD}
+#      authentication-database: ${DB_MONGO_AUTH_DB}
 
-
-#db.createUser({
-#user: "wualter",
-#pwd: "123456",
-#roles: [
-#  { role: "readWrite", db: "inventory" },
-#  { role: "dbAdmin", db: "inventory" }
-#]
-#})
+#spring:
+#  data:
+#    mongodb:
+#      uri: mongodb://admin:mongo123@localhost:27017/inventory?authSource=inventory

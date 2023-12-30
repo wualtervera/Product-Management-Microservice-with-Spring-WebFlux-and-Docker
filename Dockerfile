@@ -1,14 +1,11 @@
-# Imagen base con OpenJDK 17
-FROM openjdk:17-alpine
+FROM amazoncorretto:17.0.9-al2023
 
 # Establece el directorio de trabajo
 WORKDIR /app
 
-# Copia el JAR construido (asegúrate de que el nombre sea correcto)
 COPY target/inventory-0.0.1.jar /app/app.jar
 
 # Exponer el puerto de la aplicación
-EXPOSE 8080
+EXPOSE 9092
 
-# Espera a que MongoDB esté disponible antes de iniciar la aplicación
 CMD ["java", "-jar", "app.jar"]

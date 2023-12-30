@@ -1,32 +1,47 @@
-version: '3.8'
+version: '3.9'
 
 services:
-  mongo:
-    image: mongo
+  mongodbreactive:
+    image: mongo:latest
+    container_name: mongodb
     ports:
       - "27017:27017"
     environment:
       MONGO_INITDB_ROOT_USERNAME: admin
-      MONGO_INITDB_ROOT_PASSWORD: root
+      MONGO_INITDB_ROOT_PASSWORD: mongo123
+      MONGO_INITDB_DATABASE: inventory
+
+    volumes:
+      - ./init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js
+#      - ./data:/data/db
+
+    command: --auth
+
     networks:
       - my-network
 
+
   inventory-service:
+    container_name: inventory
     build:
       context: .
       dockerfile: Dockerfile
-    depends_on:
-      - mongo
     ports:
-      - "8080:8080"
-    environment:
-      MONGO_HOST: mongo
-      MONGO_PORT: 27017
-      MONGO_DATABASE: inventory
-      MONGO_USERNAME: wualter
-      MONGO_PASSWORD: "123456"
+      - "9092:9092"
+
+    depends_on:
+      - mongodbreactive
+
     networks:
       - my-network
+
+#    environment:
+#      - DB_MONGO_HOST=mongodbreactive
+#      - DB_MONGO_PORT=27017
+#      - DB_MONGO_DATABASE=inventory
+#      - DB_MONGO_USERNAME=admin
+#      - DB_MONGO_PASSWORD=mongo123
+#      - DB_MONGO_AUTH_DB=inventory
 
 networks:
   my-network:
